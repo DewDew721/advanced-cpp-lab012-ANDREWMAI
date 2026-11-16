@@ -23,13 +23,20 @@ bool BST::contains(int value) const {
 }
 
 bool BST::insert(int value) {
+    if (contains(value)) {
+        return false;
+    }
     root_ = insertRecursive(root_, value);
     return true;
 }
 
 
 bool BST::remove(int value) {
+    if (!contains(value)) {
+        return false;
+    }
     root_ = removeRecursive(root_, value);
+    size_--;
     return true;
 }
 
@@ -91,6 +98,7 @@ std::vector<int> BST::levelOrder() const {
 
 BSTNode* BST::insertRecursive(BSTNode* node, int value) {
     if (node == nullptr) {
+        size_++;
         return new BSTNode(value);
     }
     if (value < node->value) {
@@ -98,10 +106,6 @@ BSTNode* BST::insertRecursive(BSTNode* node, int value) {
     } else if (value > node->value) {
         node->right = insertRecursive(node->right, value);
     }
-    if (value == node->value) {
-        return nullptr;
-    }
-    size_++;
     return node;
 }
 
@@ -127,7 +131,6 @@ BSTNode* BST::removeRecursive(BSTNode* node, int value) {
         node->value = temp->value;
         node->right = removeRecursive(node->right, temp->value);
     }
-    size_--;
     return node;
 }
 
