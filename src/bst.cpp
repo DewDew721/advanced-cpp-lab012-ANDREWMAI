@@ -98,6 +98,10 @@ BSTNode* BST::insertRecursive(BSTNode* node, int value) {
     } else if (value > node->value) {
         node->right = insertRecursive(node->right, value);
     }
+    if (value == node->value) {
+        return nullptr;
+    }
+    size_++;
     return node;
 }
 
@@ -123,6 +127,7 @@ BSTNode* BST::removeRecursive(BSTNode* node, int value) {
         node->value = temp->value;
         node->right = removeRecursive(node->right, temp->value);
     }
+    size_--;
     return node;
 }
 
